@@ -52,9 +52,9 @@ jobs:
           static_site_generator: next
       - name: Install dependencies
         run: pnpm install
-      - name: Check Next.js config
-        run: cat next.config.mjs
       - name: Build with Next.js
+        env:
+          NODE_ENV: production
         run: pnpm build
       - name: Debug directory structure
         run: |
@@ -62,25 +62,13 @@ jobs:
           pwd
           echo "List root directory:"
           ls -la
-          echo "Check for .next directory:"
-          ls -la .next || echo ".next directory not found"
           echo "Check for out directory:"
           ls -la out || echo "out directory not found"
-          echo "Checking Next.js build output:"
-          find . -name ".next" | xargs ls -la || echo "No .next directory found"
-      - name: Create out directory if not exists
+      - name: Ensure index.html exists in out directory
         run: |
-          if [ ! -d "out" ]; then
-            echo "Creating out directory manually..."
-            if [ -d ".next" ]; then
-              echo "Copying from .next/standalone..."
-              mkdir -p out
-              cp -r .next/standalone/* out/ || echo "Failed to copy from .next/standalone"
-            else
-              echo "No .next directory found to copy from"
-              mkdir -p out
-              echo "<html><body><h1>Placeholder Page</h1></body></html>" > out/index.html
-            fi
+          if [ ! -f "out/index.html" ]; then
+            echo "Creating default index.html file"
+            echo "<html><head><meta http-equiv='refresh' content='0;url=/Suubee-Portfolios/' /></head><body>Redirecting...</body></html>" > out/index.html
           fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
