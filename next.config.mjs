@@ -15,8 +15,11 @@ const nextConfig = {
   // Disable image optimization for static export
   images: {
     unoptimized: true,
-    domains: [],
     remotePatterns: [],
+  },
+  // Add public assets prefix
+  publicRuntimeConfig: {
+    basePath: '/Suubee-Portfolios',
   },
 }
 

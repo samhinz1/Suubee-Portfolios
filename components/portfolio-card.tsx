@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { cn, getAssetPath } from "@/lib/utils"
 
 interface PortfolioCardProps {
   title: string
@@ -20,6 +20,8 @@ export default function PortfolioCard({
   featured = false,
   color = "mint",
 }: PortfolioCardProps) {
+  const processedIconSrc = getAssetPath(iconSrc || "placeholder.svg")
+  
   const colorClasses = {
     mint: {
       bg: "bg-mint",
@@ -71,7 +73,7 @@ export default function PortfolioCard({
             featured ? currentColor.iconBg : "bg-gray-800/50",
           )}
         >
-          <Image src={iconSrc || "/placeholder.svg"} alt={title} width={24} height={24} />
+          <Image src={processedIconSrc} alt={title} width={24} height={24} />
         </div>
       </div>
 

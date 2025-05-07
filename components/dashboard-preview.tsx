@@ -11,6 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts"
+import { getAssetPath } from "@/lib/utils"
 
 interface PortfolioData {
   date: string
@@ -27,9 +28,12 @@ export default function DashboardPreview() {
 
   useEffect(() => {
     // Load and parse CSV data based on selected portfolio
-    const dataFile = selectedPortfolio === "us" 
-      ? '/data/suubee performance data.csv'
-      : '/data/suubee performance data.csv' // Replace with AU data file when available
+    const dataFileBase = selectedPortfolio === "us" 
+      ? 'data/suubee performance data.csv'
+      : 'data/suubee performance data.csv' // Replace with AU data file when available
+    
+    // Use the getAssetPath utility to handle the basePath
+    const dataFile = getAssetPath(dataFileBase)
     
     fetch(dataFile)
       .then(response => response.text())

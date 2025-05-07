@@ -4,6 +4,7 @@ import CustomCursor from "@/components/custom-cursor"
 import PortfolioCard from "@/components/portfolio-card"
 import { Button } from "@/components/ui/button"
 import DashboardPreview from "@/components/dashboard-preview"
+import { getAssetPath } from "@/lib/utils"
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <img
-              src="/suubee-circle.png"
+              src={getAssetPath("suubee-circle.png")}
               alt="Suubee Portfolios Logo"
               className="w-10 h-10 object-contain"
             />
@@ -370,7 +371,7 @@ export default function Home() {
             <div className="md:col-span-1">
               <Link href="/" className="flex items-center gap-2 mb-4">
                 <img
-                  src="/suubee-circle.png"
+                  src={getAssetPath("suubee-circle.png")}
                   alt="Suubee Portfolios Logo"
                   className="w-8 h-8 object-contain"
                 />

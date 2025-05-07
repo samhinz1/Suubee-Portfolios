@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { getAssetPath } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Suubee Portfolios',
@@ -17,6 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Script for GitHub Pages SPA routing */}
+        <script src={getAssetPath('spa-redirect.js')}></script>
+      </head>
       <body>{children}</body>
     </html>
   )
