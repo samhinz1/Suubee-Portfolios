@@ -10,7 +10,7 @@ const nextConfig = {
     unoptimized: true,
   },
   output: 'export',
-  basePath: process.env.NODE_ENV === 'production' ? '/Suubee-Portfolios' : '',
+  basePath: process.env.NODE_ENV === 'production' ? '/suubee-portfolios' : '',
   // Remove trailing slash for GitHub Pages
   trailingSlash: false,
 }
