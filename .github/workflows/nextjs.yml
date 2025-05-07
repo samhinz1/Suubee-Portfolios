@@ -64,6 +64,14 @@ jobs:
           mkdir -p ./out
           # Create a .nojekyll file to prevent Jekyll processing
           touch ./out/.nojekyll
+          # Copy index.html to the output directory if it exists
+          if [ -f "index.html" ]; then
+            cp index.html ./out/
+          fi
+          # Copy public/index.html if it exists
+          if [ -f "public/index.html" ]; then
+            cp public/index.html ./out/
+          fi
           # If 404 page doesn't exist, create a copy of index.html as 404.html
           if [ ! -f "./out/404.html" ] && [ -f "./out/index.html" ]; then
             cp ./out/index.html ./out/404.html
