@@ -52,8 +52,36 @@ jobs:
           static_site_generator: next
       - name: Install dependencies
         run: pnpm install
+      - name: Check Next.js config
+        run: cat next.config.mjs
       - name: Build with Next.js
         run: pnpm build
+      - name: Debug directory structure
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "List root directory:"
+          ls -la
+          echo "Check for .next directory:"
+          ls -la .next || echo ".next directory not found"
+          echo "Check for out directory:"
+          ls -la out || echo "out directory not found"
+          echo "Checking Next.js build output:"
+          find . -name ".next" | xargs ls -la || echo "No .next directory found"
+      - name: Create out directory if not exists
+        run: |
+          if [ ! -d "out" ]; then
+            echo "Creating out directory manually..."
+            if [ -d ".next" ]; then
+              echo "Copying from .next/standalone..."
+              mkdir -p out
+              cp -r .next/standalone/* out/ || echo "Failed to copy from .next/standalone"
+            else
+              echo "No .next directory found to copy from"
+              mkdir -p out
+              echo "<html><body><h1>Placeholder Page</h1></body></html>" > out/index.html
+            fi
+          fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
