@@ -52,23 +52,21 @@ jobs:
           static_site_generator: next
       - name: Install dependencies
         run: pnpm install
+      - name: Check Next.js config
+        run: cat next.config.mjs
       - name: Build with Next.js
+        run: pnpm build
         env:
           NODE_ENV: production
-        run: pnpm build
-      - name: Debug directory structure
+      - name: Fix GitHub Pages 404 issue
         run: |
-          echo "Current directory:"
-          pwd
-          echo "List root directory:"
-          ls -la
-          echo "Check for out directory:"
-          ls -la out || echo "out directory not found"
-      - name: Ensure index.html exists in out directory
-        run: |
-          if [ ! -f "out/index.html" ]; then
-            echo "Creating default index.html file"
-            echo "<html><head><meta http-equiv='refresh' content='0;url=/Suubee-Portfolios/' /></head><body>Redirecting...</body></html>" > out/index.html
+          # Ensure directory exists
+          mkdir -p ./out
+          # Create a .nojekyll file to prevent Jekyll processing
+          touch ./out/.nojekyll
+          # If 404 page doesn't exist, create a copy of index.html as 404.html
+          if [ ! -f "./out/404.html" ] && [ -f "./out/index.html" ]; then
+            cp ./out/index.html ./out/404.html
           fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
